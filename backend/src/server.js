@@ -13,8 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 5001;
 const __dirname = path.resolve();
 
-//middleware
-
+// middleware
 if (process.env.NODE_ENV !== "production") {
   app.use(
     cors({
@@ -22,14 +21,13 @@ if (process.env.NODE_ENV !== "production") {
     })
   );
 }
-
-app.use(express.json()); //this middleware will parse the JSON bodies : req.body
+app.use(express.json()); // this middleware will parse JSON bodies: req.body
 app.use(rateLimiter);
 
-//our simple example of middleware
-// app.use((req,res, next)=>{
-//     console.log(`Req method is ${req.method} & Req URL is ${req.url}`);
-//     next();
+// our simple custom middleware
+// app.use((req, res, next) => {
+//   console.log(`Req method is ${req.method} & Req URL is ${req.url}`);
+//   next();
 // });
 
 app.use("/api/notes", notesRoutes);
@@ -41,8 +39,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
 }
-
-//connect the db first before starting the port
 
 connectDB().then(() => {
   app.listen(PORT, () => {
